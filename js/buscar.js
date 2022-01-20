@@ -30,9 +30,9 @@ formularioLogin.addEventListener('submit', async (e) => {
     alerta.innerHTML = '';
     alerta.style.display='block'
     filtro.length === 0 ?
-        
-        alerta.innerHTML += `
+    alerta.innerHTML += `
                 <h5 class="modal-title" id="exampleModalLabel">Registro no existe</h5>`
+                
         :
         (
             window.location.replace("../pages/calculadora.html")

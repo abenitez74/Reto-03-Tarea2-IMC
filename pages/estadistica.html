@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -11,16 +13,8 @@
       crossorigin="anonymous"
     />
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"
-      integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
     <link rel="stylesheet" href="../css/main.css" />
-    <title>Document</title>
   </head>
-
   <body>
     <header>
       <nav
@@ -60,8 +54,8 @@
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="../pages/calculadora.html"
-                  >Calculadora IMC</a
+                <a class="nav-link" href="../pages/estadistica.html"
+                  >Estadistica IMC</a
                 >
               </li>
             </ul>
@@ -79,69 +73,46 @@
       </nav>
     </header>
 
-    <div class="container">
-      <canvas id="myChart" width="400" height="400"></canvas>
-      <script>
-        const url2 = "http://localhost:4000/imc";
-        let labels = [];
-        let datos = [];
+    <div class="container graficar">
+      <h5 class="titulo-grafica">GRAFICA INDICE DE MASA CORPORAL</h5>
+      <canvas id="myChart"></canvas>
 
+      <script>
+        const url = "http://localhost:4000/imc";
         document.addEventListener("DOMContentLoaded", () => {
-          Mostrar(url2);
+          Mostrar(url);
         });
 
-        const Mostrar = async (url2) => {
-          const ctx = document.getElementById("myChart").getContext("2d");
-          const res2 = await fetch(url2);
-          const data2 = await res2.json();
+        const Mostrar = async (url) => {
+          const res = await fetch(url);
+          data1 = await res.json();
+          let labels = data1.map((registro) => registro.edad);
+          let datos = data1.map((registro1) => registro1.imc);
+          console.log(datos);
+          console.log(labels);
 
-          data2.forEach((Dataimc) => {
-            const { id, edad, imc } = Dataimc;
-
-            var labels = Dataimc.edad;
-            var datos = Dataimc.imc;
-          });
-
-          const myChart = new Chart(ctx, {
-            type: "bar",
-            data: {
-              labels: labels,
-              datasets: [
-                {
-                  label: "Edad",
-                  data: datos,
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)",
-                  ],
-                  borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                  ],
-                  borderWidth: 1,
-                },
-              ],
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true,
-                },
+          const data = {
+            labels: labels,
+            datasets: [
+              {
+                label: "IMC",
+                backgroundColor: "rgb(255, 99, 132)",
+                borderColor: "rgb(255, 99, 132)",
+                data: datos,
               },
-            },
-          });
+            ],
+          };
+
+          const config = {
+            type: "line",
+            data: data,
+            options: {},
+          };
+
+          const myChart = new Chart(document.getElementById("myChart"), config);
         };
       </script>
+      <script src="../js/imc.js"></script>
     </div>
-
-    <script src="../js/logout.js"></script>
   </body>
 </html>

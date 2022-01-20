@@ -64,7 +64,7 @@ let resp1 = await fetch(url1, {
         edad: edad,
         peso: peso,
         altura: potencia,
-        imc:imc
+        imc:imc.toFixed(2)
     }),
     headers: {
         "Content-Type": "application/json; charset=UTF-8"

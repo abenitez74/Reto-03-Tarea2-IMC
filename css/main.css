@@ -137,3 +137,11 @@ a.button {
   font-weight: bold;
   text-decoration: none;
 }
+
+.graficar {
+  width: 800px;
+}
+
+.titulo-grafica {
+  text-align: center;
+}
